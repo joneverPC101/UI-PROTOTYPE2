@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Recommendation</title>
+  <link rel="stylesheet" href="results.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Final Result Summary</h2>
+    <div class="summary">
+      <p><strong>Student Name:</strong> Juan Dela Cruz</p>
+      <p><strong>Strand:</strong> STEM</p>
+      <p><strong>Career Interest:</strong> <span id="career-interest">-</span></p>
+    </div>
+
+    <div class="recommendation-section">
+      <h3>Recommended Course(s) & Career Path:</h3>
+      <div id="recommendation-list" class="result-cards">
+        <!-- Result cards here -->
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="restart()">🔁 Start Over</button>
+      <button onclick="window.print()">🖨 Print Result</button>
+    </div>
+  </div>
+
+  <script>
+    const interest = localStorage.getItem("career_interest");
+    document.getElementById("career-interest").textContent = interest || "N/A";
+
+    const recommendations = {
+      Realistic: [
+        { course: "BS in Industrial Technology", career: "Technician / Mechanic" },
+        { course: "BS in Engineering", career: "Engineer" }
+      ],
+      Investigative: [
+        { course: "BS in Biology", career: "Medical Technologist" },
+        { course: "BS in Computer Science", career: "Data Analyst" }
+      ],
+      Artistic: [
+        { course: "BS in Fine Arts", career: "Graphic Designer" },
+        { course: "AB in Multimedia Arts", career: "Animator" }
+      ],
+      Social: [
+        { course: "BS in Education", career: "Teacher" },
+        { course: "BS in Psychology", career: "Counselor" }
+      ],
+      Enterprising: [
+        { course: "BS in Business Administration", career: "Business Manager" },
+        { course: "BS in Marketing", career: "Entrepreneur" }
+      ],
+      Conventional: [
+        { course: "BS in Accountancy", career: "Accountant" },
+        { course: "BS in Office Administration", career: "Admin Assistant" }
+      ]
+    };
+
+    const resultContainer = document.getElementById("recommendation-list");
+    const userRecs = recommendations[interest] || [];
+
+    userRecs.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h4>${item.course}</h4>
+        <p><strong>Career:</strong> ${item.career}</p>
+      `;
+      resultContainer.appendChild(div);
+    });
+
+    function restart() {
+      localStorage.clear();
+      window.location.href = "student-profile.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assessment</title>
+  <link rel="stylesheet" href="assessment.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Career Interest Assessment</h2>
+    <p>Choose the option that best describes you for each question.</p>
+
+    <form id="quiz-form" onsubmit="submitQuiz(event)">
+      <div class="question">
+        <p>1. I enjoy working with machines or tools.</p>
+        <label><input type="radio" name="q1" value="Realistic" required> Yes</label>
+        <label><input type="radio" name="q1" value="Other"> No</label>
+      </div>
+
+      <div class="question">
+        <p>2. I like solving math or science problems.</p>
+        <label><input type="radio" name="q2" value="Investigative" required> Yes</label>
+        <label><input type="radio" name="q2" value="Other"> No</label>
+      </div>
+
+      <div class="question">
+        <p>3. I enjoy creating art, music, or writing stories.</p>
+        <label><input type="radio" name="q3" value="Artistic" required> Yes</label>
+        <label><input type="radio" name="q3" value="Other"> No</label>
+      </div>
+
+      <div class="question">
+        <p>4. I like helping people learn or solve problems.</p>
+        <label><input type="radio" name="q4" value="Social" required> Yes</label>
+        <label><input type="radio" name="q4" value="Other"> No</label>
+      </div>
+
+      <div class="question">
+        <p>5. I enjoy leading, making decisions, or selling ideas.</p>
+        <label><input type="radio" name="q5" value="Enterprising" required> Yes</label>
+        <label><input type="radio" name="q5" value="Other"> No</label>
+      </div>
+
+      <div class="question">
+        <p>6. I prefer organizing things or keeping records.</p>
+        <label><input type="radio" name="q6" value="Conventional" required> Yes</label>
+        <label><input type="radio" name="q6" value="Other"> No</label>
+      </div>
+
+      <button type="submit">Submit Assessment</button>
+    </form>
+  </div>
+
+  <script>
+    function submitQuiz(e) {
+      e.preventDefault();
+      const formData = new FormData(document.getElementById("quiz-form"));
+      const score = {};
+
+      for (let pair of formData.entries()) {
+        const value = pair[1];
+        if (value !== "Other") {
+          score[value] = (score[value] || 0) + 1;
+        }
+      }
+
+      // Find highest score
+      const topInterest = Object.keys(score).reduce((a, b) => score[a] > score[b] ? a : b);
+      localStorage.setItem("career_interest", topInterest);
+
+      // Redirect to next page
+      window.location.href = "career-info.html";
+    }
+  </script>
+</body>
+</html>
